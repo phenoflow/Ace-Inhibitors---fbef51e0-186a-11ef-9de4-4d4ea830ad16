@@ -1,0 +1,25 @@
+# Tim Doran, Evangelos Kontopantelis, Jose M Valderas, Stephen Campbell, Martin Roland, Chris Salisbury, David Reeves, 2024.
+
+import sys, csv, re
+
+codes = [{"code":"12775001","system":"gprdproduct"},{"code":"4897009","system":"gprdproduct"},{"code":"12776001","system":"gprdproduct"},{"code":"5027009","system":"gprdproduct"},{"code":"5637009","system":"gprdproduct"},{"code":"4956009","system":"gprdproduct"},{"code":"5639009","system":"gprdproduct"},{"code":"4861009","system":"gprdproduct"},{"code":"6606009","system":"gprdproduct"},{"code":"4849009","system":"gprdproduct"},{"code":"5396001","system":"gprdproduct"},{"code":"5396002","system":"gprdproduct"},{"code":"6431001","system":"gprdproduct"},{"code":"5364009","system":"gprdproduct"},{"code":"11558001","system":"gprdproduct"},{"code":"5132001","system":"gprdproduct"},{"code":"6432001","system":"gprdproduct"},{"code":"12627001","system":"gprdproduct"},{"code":"5682009","system":"gprdproduct"},{"code":"5166009","system":"gprdproduct"},{"code":"5662009","system":"gprdproduct"},{"code":"6071003","system":"gprdproduct"},{"code":"5638009","system":"gprdproduct"},{"code":"4871009","system":"gprdproduct"},{"code":"1846001","system":"gprdproduct"},{"code":"5363009","system":"gprdproduct"},{"code":"5683009","system":"gprdproduct"},{"code":"11285001","system":"gprdproduct"},{"code":"5668009","system":"gprdproduct"},{"code":"6655009","system":"gprdproduct"},{"code":"5661009","system":"gprdproduct"},{"code":"5490009","system":"gprdproduct"},{"code":"5488009","system":"gprdproduct"},{"code":"5660009","system":"gprdproduct"},{"code":"5396003","system":"gprdproduct"},{"code":"5132003","system":"gprdproduct"},{"code":"4938009","system":"gprdproduct"},{"code":"4898009","system":"gprdproduct"},{"code":"4850009","system":"gprdproduct"},{"code":"5669009","system":"gprdproduct"},{"code":"12378001","system":"gprdproduct"},{"code":"5366009","system":"gprdproduct"},{"code":"4864009","system":"gprdproduct"},{"code":"6071002","system":"gprdproduct"},{"code":"6432002","system":"gprdproduct"},{"code":"5132002","system":"gprdproduct"},{"code":"4896009","system":"gprdproduct"},{"code":"6431002","system":"gprdproduct"},{"code":"5860001","system":"gprdproduct"},{"code":"12377001","system":"gprdproduct"},{"code":"5487009","system":"gprdproduct"},{"code":"4955009","system":"gprdproduct"},{"code":"4940009","system":"gprdproduct"},{"code":"6605009","system":"gprdproduct"},{"code":"12629001","system":"gprdproduct"},{"code":"4862009","system":"gprdproduct"},{"code":"4860009","system":"gprdproduct"},{"code":"4863009","system":"gprdproduct"},{"code":"4941009","system":"gprdproduct"},{"code":"5165009","system":"gprdproduct"},{"code":"4957009","system":"gprdproduct"},{"code":"11566001","system":"gprdproduct"},{"code":"4866009","system":"gprdproduct"},{"code":"11574001","system":"gprdproduct"},{"code":"5640009","system":"gprdproduct"},{"code":"12628001","system":"gprdproduct"},{"code":"4939009","system":"gprdproduct"},{"code":"8934001","system":"gprdproduct"},{"code":"4954009","system":"gprdproduct"},{"code":"6071001","system":"gprdproduct"},{"code":"4853009","system":"gprdproduct"},{"code":"12774001","system":"gprdproduct"},{"code":"5667009","system":"gprdproduct"},{"code":"5663009","system":"gprdproduct"},{"code":"9259002","system":"gprdproduct"},{"code":"9259001","system":"gprdproduct"},{"code":"4899009","system":"gprdproduct"},{"code":"12773001","system":"gprdproduct"},{"code":"5365009","system":"gprdproduct"},{"code":"6432003","system":"gprdproduct"},{"code":"4854009","system":"gprdproduct"},{"code":"4870009","system":"gprdproduct"},{"code":"4865009","system":"gprdproduct"},{"code":"14249001","system":"gprdproduct"},{"code":"5684009","system":"gprdproduct"},{"code":"4872009","system":"gprdproduct"},{"code":"6656009","system":"gprdproduct"},{"code":"5666009","system":"gprdproduct"},{"code":"6431003","system":"gprdproduct"},{"code":"5681009","system":"gprdproduct"},{"code":"5164009","system":"gprdproduct"},{"code":"5489009","system":"gprdproduct"}];
+REQUIRED_CODES = 1;
+with open(sys.argv[1], 'r') as file_in, open('ace-inhibitors-potential-cases.csv', 'w', newline='') as file_out:
+    csv_reader = csv.DictReader(file_in)
+    csv_writer = csv.DictWriter(file_out, csv_reader.fieldnames + ["ace-inhibitors-captoco---primary-identified"])
+    csv_writer.writeheader();
+    codes_identified = 0;
+    for row in csv_reader:
+        newRow = row.copy();
+        for cell in row:
+            # Iterate cell lists (e.g. codes)
+            for item in re.findall(r'\(([^,]*)\,', row[cell]):
+                if(item in list(map(lambda code: code['code'], codes))): codes_identified+=1;
+                if(codes_identified>=REQUIRED_CODES):
+                    newRow["ace-inhibitors-captoco---primary-identified"] = "CASE";
+                    break;
+            if(codes_identified>=REQUIRED_CODES): break;
+        if(codes_identified<REQUIRED_CODES):
+            newRow["ace-inhibitors-captoco---primary-identified"] = "UNK";
+        codes_identified=0;
+        csv_writer.writerow(newRow)
